@@ -3,8 +3,25 @@ package io.whitemice.time
 import java.time.LocalDate
 import java.time.Month._
 
-object NyseCalendar {
-  val holidays: Set[LocalDate] =
+object NyseCalendar extends MarketCalendar {
+  override val removedDays: Set[LocalDate] =
+    Set(
+      Seq(
+      (2001, SEPTEMBER, 11), (2001, SEPTEMBER, 12), (2001, SEPTEMBER, 13), (2001, SEPTEMBER, 14),
+      (2012, OCTOBER, 29), (2012, OCTOBER, 30),
+      ).map{ tuple => LocalDate.of(tuple._1, tuple._2, tuple._3) }: _*
+    )
+
+  override val partialDays: Set[LocalDate] =
+    Set(
+      Seq(
+        (2020, NOVEMBER, 27), (2020, DECEMBER, 24),
+        (2021, NOVEMBER, 26),
+        (2022, NOVEMBER, 25),
+      ).map{ tuple => LocalDate.of(tuple._1, tuple._2, tuple._3) }: _*
+    )
+
+  override val holidays: Set[LocalDate] =
     Set(
       Seq(
         (2000, JANUARY, 1), (2000, JANUARY, 17), (2000, FEBRUARY, 21), (2000, APRIL, 21),
@@ -13,7 +30,6 @@ object NyseCalendar {
 
         (2001, JANUARY, 1), (2001, JANUARY, 15), (2001, FEBRUARY, 19), (2001, APRIL, 13),
         (2001, MAY, 28), (2001, JULY, 4), (2001, SEPTEMBER, 3),
-        (2001, SEPTEMBER, 11), (2001, SEPTEMBER, 12), (2001, SEPTEMBER, 13), (2001, SEPTEMBER, 14),
         (2001, NOVEMBER, 22), (2001, DECEMBER, 25),
 
         (2002, JANUARY, 1), (2002, JANUARY, 21), (2002, FEBRUARY, 18), (2002, MARCH, 29),
@@ -58,7 +74,6 @@ object NyseCalendar {
 
         (2012, JANUARY, 2), (2012, JANUARY, 16), (2012, FEBRUARY, 20), (2012, APRIL, 6),
         (2012, MAY, 28), (2012, JULY, 4), (2012, SEPTEMBER, 3), (2012, NOVEMBER, 22),
-        (2012, OCTOBER, 29), (2012, OCTOBER, 30),
         (2012, DECEMBER, 25),
 
         (2013, JANUARY, 1), (2013, JANUARY, 21), (2013, FEBRUARY, 18), (2013, MARCH, 29),

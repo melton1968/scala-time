@@ -20,6 +20,11 @@ class MarketDateUnitTest extends FlatSpec with Matchers with OptionValues {
     date.isMarketOpen() shouldEqual false
   }
 
+  it should "return false for unplanned market closures" in {
+    val date = LocalDate.of(2001,9,11)
+    date.isMarketOpen() shouldEqual false
+  }
+
   it should "return true a normal trading day" in {
     val date = LocalDate.of(2019,12,30)
     date.isMarketOpen() shouldEqual true

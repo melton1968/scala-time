@@ -11,8 +11,11 @@ class MarketDate(val date: LocalDate) {
     }
   }
 
-  def isMarketOpen()(implicit holidays: Set[LocalDate]): Boolean = {
-    if (holidays.contains(date)) false else isWeekDay
+  def isMarketOpen()(implicit marketCalendar: MarketCalendar): Boolean = {
+    if (marketCalendar.holidays.contains(date)) false
+    else if (marketCalendar.partialDays.contains(date)) false
+    else if (marketCalendar.removedDays.contains(date)) false
+    else isWeekDay
   }
 
 }
