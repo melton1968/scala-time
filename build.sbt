@@ -1,6 +1,6 @@
 
 name := "scala-time"
-version := "0.1-SNAPSHOT"
+version := "0.2"
 organization := "io.whitemice"
 scalaVersion := "2.13.1"
 
