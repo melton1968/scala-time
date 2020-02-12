@@ -30,4 +30,77 @@ class MarketDateUnitTest extends FlatSpec with Matchers with OptionValues {
     date.isMarketOpen() shouldEqual true
   }
 
+  "nextMarketDay" should "return the next day" in {
+    val date = LocalDate.of(2020, 1, 2)
+    date.nextMarketDay() shouldEqual LocalDate.of(2020, 1, 3)
+  }
+
+  it should "advance past the weekend" in {
+    val date = LocalDate.of(2020, 1, 3)
+    date.nextMarketDay() shouldEqual LocalDate.of(2020, 1, 6)
+  }
+
+  it should "advance out of the weekend" in {
+    val date = LocalDate.of(2020, 1, 5)
+    date.nextMarketDay() shouldEqual LocalDate.of(2020, 1, 6)
+  }
+
+  it should "advance past a holiday" in {
+    val date = LocalDate.of(2019, 12, 31)
+    date.nextMarketDay() shouldEqual LocalDate.of(2020, 1, 2)
+  }
+
+  it should "advance out of a holiday" in {
+    val date = LocalDate.of(2020, 1, 1)
+    date.nextMarketDay() shouldEqual LocalDate.of(2020, 1, 2)
+  }
+
+  "prevMarketDay" should "return the previous day" in {
+    val date = LocalDate.of(2020, 1, 3)
+    date.prevMarketDay() shouldEqual LocalDate.of(2020, 1, 2)
+  }
+
+  it should "advance past the weekend" in {
+    val date = LocalDate.of(2020, 1, 6)
+    date.prevMarketDay() shouldEqual LocalDate.of(2020, 1, 3)
+  }
+
+  it should "advance out of the weekend" in {
+    val date = LocalDate.of(2020, 1, 5)
+    date.prevMarketDay() shouldEqual LocalDate.of(2020, 1, 3)
+  }
+
+  it should "advance past a holiday" in {
+    val date = LocalDate.of(2020, 1, 2)
+    date.prevMarketDay() shouldEqual LocalDate.of(2019, 12, 31)
+  }
+
+  it should "advance out of a holiday" in {
+    val date = LocalDate.of(2020, 1, 1)
+    date.prevMarketDay() shouldEqual LocalDate.of(2019, 12, 31)
+  }
+
+  "marketTo" should "range over the open market days inclusive" in {
+    val start = LocalDate.of(2019, 12, 30)
+    val end = LocalDate.of(2020, 1, 6)
+    val days = start marketTo end
+    days.length shouldEqual 5
+    days(0) shouldEqual start
+    days(1) shouldEqual LocalDate.of(2019, 12, 31)
+    days(2) shouldEqual LocalDate.of(2020, 1, 2)
+    days(3) shouldEqual LocalDate.of(2020, 1, 3)
+    days(4) shouldEqual end
+  }
+
+  "marketUntil" should "range over the open market days exclusive" in {
+    val start = LocalDate.of(2019, 12, 30)
+    val end = LocalDate.of(2020, 1, 6)
+    val days = start marketUntil end
+    days.length shouldEqual 4
+    days(0) shouldEqual start
+    days(1) shouldEqual LocalDate.of(2019, 12, 31)
+    days(2) shouldEqual LocalDate.of(2020, 1, 2)
+    days(3) shouldEqual LocalDate.of(2020, 1, 3)
+  }
+
 }

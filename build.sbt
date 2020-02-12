@@ -1,7 +1,7 @@
+
 name := "scala-time"
-
-version := "0.1"
-
+version := "0.1-SNAPSHOT"
+organization := "io.whitemice"
 scalaVersion := "2.13.1"
 
 scalacOptions ++= Seq(
@@ -21,3 +21,6 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 //noinspection Annotator
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
+
+githubRepo := "scala-time"
+githubRepoOwner := "album-mus"
