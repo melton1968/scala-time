@@ -1,5 +1,6 @@
 package io.whitemice.time
 
+import java.time.temporal.ChronoUnit
 import java.time.{DayOfWeek, LocalDate}
 
 class MarketDate(val date: LocalDate) {
@@ -31,12 +32,12 @@ class MarketDate(val date: LocalDate) {
   }
 
   def marketTo(end: LocalDate)(implicit marketCalendar: MarketCalendar): IndexedSeq[LocalDate] = {
-    IndexedSeq.iterate(date, 1 + date.until(end).getDays)(_.plusDays(1))
+    IndexedSeq.iterate(date, 1+ ChronoUnit.DAYS.between(date, end).toInt)(_.plusDays(1))
       .filter(_.isMarketOpen()(marketCalendar))
   }
 
   def marketUntil(end: LocalDate)(implicit marketCalendar: MarketCalendar): IndexedSeq[LocalDate] = {
-    IndexedSeq.iterate(date, date.until(end).getDays)(_.plusDays(1))
+    IndexedSeq.iterate(date, ChronoUnit.DAYS.between(date, end).toInt)(_.plusDays(1))
       .filter(_.isMarketOpen()(marketCalendar))
   }
 }

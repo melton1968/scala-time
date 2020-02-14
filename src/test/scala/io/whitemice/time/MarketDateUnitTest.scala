@@ -2,6 +2,7 @@ package io.whitemice.time
 
 import org.scalatest.{FlatSpec, Matchers, OptionValues}
 import java.time.LocalDate
+import java.time.temporal.{ChronoUnit, TemporalUnit}
 
 class MarketDateUnitTest extends FlatSpec with Matchers with OptionValues {
 
@@ -90,6 +91,15 @@ class MarketDateUnitTest extends FlatSpec with Matchers with OptionValues {
     days(2) shouldEqual LocalDate.of(2020, 1, 2)
     days(3) shouldEqual LocalDate.of(2020, 1, 3)
     days(4) shouldEqual end
+  }
+
+  it should "cross month boundaries" in {
+    val start = LocalDate.of(2019, 11, 20)
+    val end = LocalDate.of(2019, 12, 20)
+    val days = start marketTo end
+    days.length shouldEqual 22
+    days.head shouldEqual start
+    days.last shouldEqual end
   }
 
   "marketUntil" should "range over the open market days exclusive" in {
